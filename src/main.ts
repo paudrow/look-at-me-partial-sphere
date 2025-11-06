@@ -2,9 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const clipPlanes = [
-	new THREE.Plane( new THREE.Vector3( 1, 0, 0 ), 0 ),
-	new THREE.Plane( new THREE.Vector3( 0, - 1, 0 ), 0 ),
-	new THREE.Plane( new THREE.Vector3( 0, 0, - 1 ), 0 )
+	new THREE.Plane()
 ];
 
 const scene = new THREE.Scene();
@@ -32,7 +30,7 @@ const material = new THREE.MeshBasicMaterial( {
 	color: 0x00ff00,
 	side: THREE.DoubleSide,
 	clippingPlanes: clipPlanes,
-	clipIntersection: true,
+	clipIntersection: false,
 	alphaToCoverage: true,
 } );
 const sphere = new THREE.Mesh(geometry, material);
@@ -50,7 +48,7 @@ const innermostMaterial = new THREE.MeshBasicMaterial( {
 	color: 0xffff00,
 	side: THREE.DoubleSide,
 	clippingPlanes: clipPlanes,
-	clipIntersection: true,
+	clipIntersection: false,
 	alphaToCoverage: true,
 } );
 const innermostSphere = new THREE.Mesh(innermostGeometry, innermostMaterial);
@@ -82,6 +80,9 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   cube.lookAt(camera.position);
+  const direction = new THREE.Vector3();
+  camera.getWorldDirection(direction);
+  clipPlanes[0].setFromNormalAndCoplanarPoint(direction, new THREE.Vector3(0, 1, 0));
   renderer.render(scene, camera);
 }
 animate();
