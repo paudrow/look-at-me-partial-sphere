@@ -28,7 +28,7 @@ light.position.set( - 1.25, 1, 1.25 );
 scene.add( light );
 
 const geometry = new THREE.SphereGeometry(1, 32, 16);
-const material = new THREE.MeshPhongMaterial( {
+const material = new THREE.MeshBasicMaterial( {
 	color: 0x00ff00,
 	side: THREE.DoubleSide,
 	clippingPlanes: clipPlanes,
@@ -40,13 +40,13 @@ sphere.position.y = 1;
 scene.add(sphere);
 
 const innerGeometry = new THREE.SphereGeometry(0.4, 32, 16);
-const innerMaterial = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+const innerMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
 innerSphere.position.y = 1;
 scene.add(innerSphere);
 
 const innermostGeometry = new THREE.SphereGeometry(0.6, 32, 16);
-const innermostMaterial = new THREE.MeshPhongMaterial( {
+const innermostMaterial = new THREE.MeshBasicMaterial( {
 	color: 0xffff00,
 	side: THREE.DoubleSide,
 	clippingPlanes: clipPlanes,
@@ -57,17 +57,20 @@ const innermostSphere = new THREE.Mesh(innermostGeometry, innermostMaterial);
 innermostSphere.position.y = 1;
 scene.add(innermostSphere);
 
+const gridHelper = new THREE.GridHelper(10, 10);
+scene.add(gridHelper);
+
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load('https://threejs.org/examples/textures/uv_grid_opengl.jpg');
 
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 const cubeMaterials = [
-  new THREE.MeshPhongMaterial({ color: 0xffffff }),
-  new THREE.MeshPhongMaterial({ color: 0xffffff }),
-  new THREE.MeshPhongMaterial({ color: 0xffffff }),
-  new THREE.MeshPhongMaterial({ color: 0xffffff }),
-  new THREE.MeshPhongMaterial({ map: texture }),
-  new THREE.MeshPhongMaterial({ color: 0xffffff }),
+  new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  new THREE.MeshBasicMaterial({ map: texture }),
+  new THREE.MeshBasicMaterial({ color: 0xffffff }),
 ];
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterials);
 cube.position.set(2, 1, 0);
